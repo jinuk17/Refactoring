@@ -35,10 +35,7 @@ public class Customer {
 
         while (rentalEnumeration.hasMoreElements()) {
 
-            double thisAmount = 0d;
             Rental each = rentalEnumeration.nextElement();
-
-            thisAmount = each.getCharge();
 
             frequentRenterPoints ++;
 
@@ -46,8 +43,8 @@ public class Customer {
                     each.getDaysRented() >1)
                 frequentRenterPoints ++;
 
-            result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(thisAmount) + "\n";
-            totalAmount += thisAmount;
+            result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(each.getCharge()) + "\n";
+            totalAmount += each.getCharge();
         }
 
         result += "누적 대여료 : " + String.valueOf(totalAmount) + "\n";
