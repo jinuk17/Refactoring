@@ -26,9 +26,6 @@ public class Customer {
 
     public String statement(){
 
-        double totalAmount = 0;
-        int frequentRenterPoints = 0;
-
         Enumeration<Rental> rentalEnumeration = rentals.elements();
 
         String result = getName() + " 고객님의 대여 기록\n";
@@ -37,14 +34,47 @@ public class Customer {
 
             Rental each = rentalEnumeration.nextElement();
 
-            frequentRenterPoints += each.getFrequentRenterPoints();
-
             result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(each.getCharge()) + "\n";
-            totalAmount += each.getCharge();
         }
 
-        result += "누적 대여료 : " + String.valueOf(totalAmount) + "\n";
-        result += "적립 포인트 : " + String.valueOf(frequentRenterPoints);
+        result += "누적 대여료 : " + String.valueOf(getTotalCharge()) + "\n";
+        result += "적립 포인트 : " + String.valueOf(getTotalFrequentRenterPoints());
+        return result;
+    }
+
+    public String htmlStatement(){
+        Enumeration<Rental> rentalEnumeration = rentals.elements();
+
+        String result = "<H1><EM>" + getName() + " 고객님의 대여 기록</EM></H1><P>\n";
+        while (rentalEnumeration.hasMoreElements()) {
+            Rental each = rentalEnumeration.nextElement();
+
+            result += each.getMovie().getTitle() + ": " + String.valueOf(each.getCharge()) + "<BR>\n";
+        }
+        result += "<P>누적 대여료: <EM>" + String.valueOf(getTotalCharge()) + "</EM><P>\n";
+        result += "적립 포인트: <EM>" + String.valueOf(getTotalFrequentRenterPoints()) + "</EM><P>";
+        return result;
+    }
+
+    private int getTotalFrequentRenterPoints() {
+        int result = 0;
+        Enumeration<Rental> rentalEnumeration = rentals.elements();
+        while (rentalEnumeration.hasMoreElements()) {
+
+            Rental each = rentalEnumeration.nextElement();
+            result += each.getFrequentRenterPoints();
+        }
+        return result;
+    }
+
+    private double getTotalCharge() {
+        double result = 0;
+        Enumeration<Rental> rentalEnumeration = rentals.elements();
+        while (rentalEnumeration.hasMoreElements()) {
+
+            Rental each = rentalEnumeration.nextElement();
+            result += each.getCharge();
+        }
         return result;
     }
 }
