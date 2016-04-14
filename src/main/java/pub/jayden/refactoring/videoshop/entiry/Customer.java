@@ -48,7 +48,6 @@ public class Customer {
         String result = "<H1><EM>" + getName() + " 고객님의 대여 기록</EM></H1><P>\n";
         while (rentalEnumeration.hasMoreElements()) {
             Rental each = rentalEnumeration.nextElement();
-
             result += each.getMovie().getTitle() + ": " + String.valueOf(each.getCharge()) + "<BR>\n";
         }
         result += "<P>누적 대여료: <EM>" + String.valueOf(getTotalCharge()) + "</EM><P>\n";

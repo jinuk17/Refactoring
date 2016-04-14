@@ -9,12 +9,12 @@ public class Movie {
     public static final int CHILDREN = 2;
 
     private String title;
-    private int priceCode;
+    private Price price;
 
     public Movie(String title, int priceCode) {
 
         title = title;
-        priceCode = priceCode;
+        setPriceCode(priceCode);
     }
 
     public String getTitle() {
@@ -22,10 +22,30 @@ public class Movie {
     }
 
     public int getPriceCode() {
-        return priceCode;
+        return price.getPriceCode();
+    }
+
+    double getCharge(int daysRented) {
+        return price.getCharge(daysRented);
+    }
+
+    public int getFrequentRenterPoints(int daysRented) {
+        return price.getFrequentRenterPoints(daysRented);
     }
 
     public void setPriceCode(int priceCode) {
-        this.priceCode = priceCode;
+        switch (priceCode){
+            case REGULAR:
+                price = new RegularPrice();
+                break;
+            case CHILDREN:
+                price = new ChildrensPrice();
+                break;
+            case NEW_RELEASE:
+                price = new NewReleasePrice();
+                break;
+            default:
+                throw new IllegalArgumentException("Not Support this price code : " + priceCode);
+        }
     }
 }
